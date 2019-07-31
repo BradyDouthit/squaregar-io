@@ -8,22 +8,23 @@ var randomDotAttributes = function () {
 
   var randomX = Math.floor(Math.random() * 501);
   var randomY = Math.floor(Math.random() * 501);//sets random x and y values for each dot
+  console.log(randomX)
+  var precision = 20; // 2 decimals
+  var randomWH = Math.floor(Math.random() * (10 * precision - 1 * precision) + 1 * precision) / (1 * precision);
   var newDot = Crafty.e("2D, DOM, Color, Collision, newDot, DebugRectangle")
-    .attr({ x: randomX, y: randomY, w: 10, h: 10 })
+    .attr({ x: randomX, y: randomY, w: randomWH, h: randomWH })
     .color(dotColor)
     .collision()
     .debugStroke("red")
-    newDot.checkHits("Player").bind("HitOn", function(hitData) {
-      this.color("green");
-      this.w = this.w + 3;
-      this.h = this.h + 3;
-    });
-    newDot.debugRectangle(newDot)
+  newDot.checkHits("Player").bind("HitOn", function (hitData) {
+    this.destroy();
+  });
+  newDot.debugRectangle(newDot)
 };
 
 window.onload = function () {
   Crafty.init(501, 501, document.getElementById('cr-stage'));
-  var playerStats = { x: 10, y: 10, w: 50, h: 50 }
+  var playerStats = { x: 235, y: 225, w: 25, h: 25 }
 
 
   //sets the player entity attributes
@@ -38,15 +39,16 @@ window.onload = function () {
         this[evt.axis] = evt.oldValue;
       }
     });
-    playerBox.debugRectangle(playerBox)
+  playerBox.debugRectangle(playerBox)
 
-    playerBox.z = 2;
+  playerBox.z = 2;
 
-    playerBox.checkHits("newDot").bind("HitOn", function(hitData) {
-      this.color("green");
-      this.w = this.w + 3;
-      this.h = this.h + 3;
-    });
+  playerBox.checkHits("newDot").bind("HitOn", function (hitData) {
+    var precision = 20; // 2 decimals
+    var randomWH = Math.floor(Math.random() * (10 * precision - 1 * precision) + 1 * precision) / (1 * precision);
+    this.w = this.w + randomWH;
+    this.h = this.h + randomWH;
+  });
 
   //sets up walls for collision with the player entity
   var wallBottom = Crafty.e('solid, 2D, DOM, Color, bottom')
@@ -69,7 +71,7 @@ $("#start-button").click(function () {
   var countTime = 0;
   var countIntervalSteps = setInterval(function () {//sets up an interval that stops at 50
     countTime++
-    console.log(countTime)
+    // console.log(countTime)
     randomDotAttributes();//creates a new "dot" on the screen every time this is called
     if (countTime === 50) {
       clearInterval(countIntervalSteps)
