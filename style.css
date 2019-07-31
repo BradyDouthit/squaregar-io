@@ -1,0 +1,22 @@
+html {
+    background-color: gray;
+}
+#cr-stage {
+    margin: 0 auto !important;
+    background-color: black;
+}
+#start-div {
+    width: 100px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+#start-button {
+    width: 100px;
+    color: white;
+    background-color: red;
+    border: none;
+    border-radius: 3px;
+    font-size: 30px;
+    cursor: pointer;
+}
